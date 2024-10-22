@@ -10,7 +10,7 @@ const BASE_URL =
 const config: Config = {
   title: "LoCoSpec",
   tagline: "Low Code Specification for building full-stack web and mobile apps",
-  favicon: "img/logo_favicon.png",
+  favicon: "img/favicon_2.png",
 
   // Set the production url of your site here
   url: "https://locospec.com",
