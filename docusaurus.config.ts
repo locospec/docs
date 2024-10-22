@@ -8,8 +8,8 @@ const BASE_URL =
     : "/";
 
 const config: Config = {
-  title: "My Site",
-  tagline: "Dinosaurs are cool",
+  title: "LoCoSpec",
+  tagline: "Low Code Specification for building full-stack web and mobile apps",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
@@ -38,6 +38,8 @@ const config: Config = {
       "classic",
       {
         docs: {
+          path: "spec",
+          routeBasePath: "spec",
           sidebarPath: "./sidebars.ts",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -70,9 +72,9 @@ const config: Config = {
     // Replace with your project's social card
     image: "img/docusaurus-social-card.jpg",
     navbar: {
-      title: "My Site",
+      title: "LoCoSpec",
       logo: {
-        alt: "My Site Logo",
+        alt: "LoCoSpec Logo",
         src: "img/logo.svg",
       },
       items: [
@@ -80,7 +82,7 @@ const config: Config = {
           type: "docSidebar",
           sidebarId: "tutorialSidebar",
           position: "left",
-          label: "Tutorial",
+          label: "Spec",
         },
         { to: "/blog", label: "Blog", position: "left" },
         {
@@ -97,8 +99,8 @@ const config: Config = {
           title: "Docs",
           items: [
             {
-              label: "Tutorial",
-              to: "/docs/intro",
+              label: "Intro",
+              to: "/spec/intro",
             },
           ],
         },
@@ -107,7 +109,7 @@ const config: Config = {
           items: [
             {
               label: "Stack Overflow",
-              href: "https://stackoverflow.com/questions/tagged/docusaurus",
+              href: "https://stackoverflow.com/questions/tagged/locospec",
             },
             {
               label: "Discord",
@@ -115,7 +117,7 @@ const config: Config = {
             },
             {
               label: "Twitter",
-              href: "https://twitter.com/docusaurus",
+              href: "https://twitter.com/locospec",
             },
           ],
         },
@@ -128,12 +130,11 @@ const config: Config = {
             },
             {
               label: "GitHub",
-              href: "https://github.com/facebook/docusaurus",
+              href: "https://github.com/locospec/locospec.github.io",
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
