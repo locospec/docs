@@ -6,7 +6,7 @@
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://locospec.com/pr-preview/pr-3/blog"/>
     <subtitle>LoCoSpec Blog</subtitle>
-    <icon>https://locospec.com/pr-preview/pr-3/img/favicon.ico</icon>
+    <icon>https://locospec.com/pr-preview/pr-3/img/logo_favicon.png</icon>
     <entry>
         <title type="html"><![CDATA[Install TailwindCSS in Docusaurus]]></title>
         <id>https://locospec.com/pr-preview/pr-3/blog/integrate-tailwind-and-docusarus</id>
