@@ -3,7 +3,7 @@ slug: integrate-tailwind-and-docusarus
 title: Install TailwindCSS in Docusaurus
 authors: rjvim
 tags: [tutorial]
-draft: true
+draft: false
 date: 2024-10-22
 ---
 
