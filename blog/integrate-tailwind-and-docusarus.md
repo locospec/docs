@@ -114,3 +114,9 @@ _Run `npm install` after above_
   plugins: ["docusaurus-tailwindcss-loader"],
 }
 ```
+
+### Note
+
+We have used `https://cdn.jsdelivr.net/npm/tailwindcss/dist/preflight.min.css` to load preflight, but it misses some latest before/after preflight configuration - and we got lucky we are not using it.
+
+Latest preflight as of 22nd Oct 2024 is at `https://unpkg.com/tailwindcss@3.4.14/src/css/preflight.css`, but adding it breaks the layout.
