@@ -17,3 +17,11 @@ hola:
   label: Hola
   permalink: /hola
   description: Hola tag description
+
+data-structures:
+  label: Data Structures
+  permalink: /data-structures
+
+algorithms:
+  label: Algorithms
+  permalink: /algorithms

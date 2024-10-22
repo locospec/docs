@@ -1,8 +1,10 @@
 ---
-slug: first-blog-post
-title: First Blog Post
+slug: using-graph-data-structures-algorithms
+title: Using Graph Data Structures and Algorithms
 authors: [rjvim]
-tags: [hola, docusaurus]
+tags: [data-structures, algorithms]
+draft: true
+date: 2024-10-22
 ---
 
 Lorem ipsum dolor sit amet...
