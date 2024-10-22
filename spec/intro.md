@@ -2,46 +2,49 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Intro
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Let's discover **LoCoSpec in less than 5 minutes**.
 
-## Getting Started
+## What is LoCoSpec?
 
-Get started by **creating a new site**.
+LoCoSpec stands for "Low Code Specification". No Code and Low Code solutions have gained popularity in recent times, solving the problem of rapidly developing applications without writing much code, and if possible, not writing any code at all.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+Using LoCoSpec, one would still need to write code, which is why it's low-code (loco). What LoCoSpec does is streamline a "workflow" and insist on representing that workflow using JSON (We might expand it to use additional formats in the future).
 
-### What you'll need
+An **Intent** to read certain rows from a table can be represented as a workflow:
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+- Authorize the user
+- Build the query
+- Execute the query
+- Serialize the result
 
-## Generate a new site
+LoCoSpec hypothesizes that this workflow can be represented as a JSON object - and how that JSON object should be defined is what we call a **Specification**.
 
-Generate a new Docusaurus site using the **classic template**.
+The Specification ultimately has to be implemented using a Programming Language (PHP, Python, Java, C#, etc.), and that's where the Open Source Community must play a crucial role. The Spec has to be readable and elegant. It should be easy to understand and maintain.
 
-The classic template will automatically be added to your project after you run the command:
+## Use-Cases
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+Here are several use-cases that LoCoSpec should be able to solve (Unranked):
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+1. Represent a Data Model & Schema in a JSON Object Format including Relationships
+2. Represent a Workflow/Business Logic in a JSON Object Format (A State Machine)
+3. Represent Validation Rules while performing actions like Insert, Update, Delete
+4. Represent Authorization Rules
+5. Write Transformation Rules and Logic which work on JSONs
+6. Build Frontend Forms, Tables using Server-Driven UI
+7. Build entire CRUD applications by declaring Data Models, Actions, Validation Rules, Authorization Rules, Transformation Rules, and UI in JSON
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+If we can represent anything logical in JSON Format and consistently implement it using any programming language, people can use it to build their applications. Then, the engine executing the Specification can be swapped out for any other engine.
 
-## Start your site
+## Inspirations
 
-Run the development server:
+Many projects have aimed to solve problems using JSON as a foundation. We have studied and used some of them to understand how we can solve our problem more effectively:
 
-```bash
-cd my-website
-npm run start
-```
+- [State Machine Language](https://states-language.net/)
+- [AJV](https://ajv.js.org/)
+- [JQ](https://jqlang.github.io/jq/)
+- [Serverless Workflow](https://serverlessworkflow.io/)
+- [JSONFORMS](https://jsonforms.io/)
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+We don't intend to reinvent everything from scratch but rather use existing solutions effectively while keeping Developer Experience (DX) as our top priority.
