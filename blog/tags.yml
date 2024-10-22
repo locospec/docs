@@ -25,3 +25,7 @@ data-structures:
 algorithms:
   label: Algorithms
   permalink: /algorithms
+
+tutorial:
+  label: Tutorial
+  permalink: /tutorial
