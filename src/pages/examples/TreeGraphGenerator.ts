@@ -9,6 +9,52 @@ type TreeNode = {
 };
 
 class TreeGraphGenerator {
+  static generateBFSTreeAllPaths(
+    adjacencyList: AdjacencyList,
+    startVertex: string
+  ): TreeNode {
+    // Queue now tracks the path to each vertex
+    const queue: {
+      vertex: string;
+      node: TreeNode;
+      path: Set<string>;
+    }[] = [];
+
+    // Create root node
+    const root: TreeNode = { id: startVertex, children: [] };
+    queue.push({
+      vertex: startVertex,
+      node: root,
+      path: new Set([startVertex]),
+    });
+
+    while (queue.length > 0) {
+      const { vertex, node, path } = queue.shift()!;
+
+      // Process all neighbors of current vertex
+      const neighbors = adjacencyList[vertex] || [];
+      for (const neighbor of neighbors) {
+        // Only avoid cycles in current path
+        if (!path.has(neighbor)) {
+          const childNode: TreeNode = { id: neighbor, children: [] };
+          node.children.push(childNode);
+
+          // Create new path for this branch
+          const newPath = new Set(path);
+          newPath.add(neighbor);
+
+          queue.push({
+            vertex: neighbor,
+            node: childNode,
+            path: newPath,
+          });
+        }
+      }
+    }
+
+    return root;
+  }
+
   // Convert adjacency list to tree structure using BFS
   static generateBFSTree(
     adjacencyList: AdjacencyList,
@@ -44,25 +90,27 @@ class TreeGraphGenerator {
     adjacencyList: AdjacencyList,
     startVertex: string
   ): TreeNode {
-    const visited = new Set<string>();
+    const pathVisited = new Set<string>(); // Track current path
 
-    function dfsHelper(vertex: string): TreeNode {
-      visited.add(vertex);
+    function dfsHelper(vertex: string, currentPath: Set<string>): TreeNode {
       const node: TreeNode = { id: vertex, children: [] };
+      currentPath.add(vertex);
 
       // Process all neighbors
       const neighbors = adjacencyList[vertex] || [];
       for (const neighbor of neighbors) {
-        if (!visited.has(neighbor)) {
-          const childNode = dfsHelper(neighbor);
+        // Only avoid cycles in current path
+        if (!currentPath.has(neighbor)) {
+          const childNode = dfsHelper(neighbor, new Set(currentPath));
           node.children.push(childNode);
         }
       }
 
+      currentPath.delete(vertex); // Backtrack
       return node;
     }
 
-    return dfsHelper(startVertex);
+    return dfsHelper(startVertex, new Set());
   }
 
   // Convert tree structure to Mermaid syntax

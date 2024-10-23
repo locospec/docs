@@ -2,7 +2,7 @@ import { type Config } from "tailwindcss";
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/**/*.html", "./src/**/*.js", "./src/**/*.tsx"],
-  corePlugins: { preflight: false },
+  corePlugins: { preflight: false, container: false },
   darkMode: ["class", '[data-theme="dark"]'],
   theme: {
     extend: {},

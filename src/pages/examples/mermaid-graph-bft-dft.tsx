@@ -61,25 +61,28 @@ const GraphVisualizer = () => {
       theme: "default",
     });
 
-    const bfsTreeRoot = TreeGraphGenerator.generateBFSTree(cities, "Mumbai");
+    const bfsTreeRoot = TreeGraphGenerator.generateBFSTreeAllPaths(
+      cities,
+      startVertex
+    );
     const bfsMermaidSyntax =
       TreeGraphGenerator.treeToMermaidSyntax(bfsTreeRoot);
     console.log(bfsMermaidSyntax);
 
     await renderMermaidDiagram(diagramRefs.bfsTraversal, bfsMermaidSyntax);
 
-    const dfsTreeRoot = TreeGraphGenerator.generateDFSTree(cities, "Mumbai");
+    const dfsTreeRoot = TreeGraphGenerator.generateDFSTree(cities, startVertex);
     const dfsMermaidSyntax =
       TreeGraphGenerator.treeToMermaidSyntax(dfsTreeRoot);
     console.log(dfsMermaidSyntax);
 
     await renderMermaidDiagram(diagramRefs.dfsTraversal, dfsMermaidSyntax);
 
-    // const graph = createGraph(graphType === "directed");
+    const graph = createGraph(graphType === "directed");
 
     // Render full graph
-    // const fullGraphSyntax = graph.toMermaidSyntax();
-    // await renderMermaidDiagram(diagramRefs.fullGraph, fullGraphSyntax);
+    const fullGraphSyntax = graph.toMermaidSyntax();
+    await renderMermaidDiagram(diagramRefs.fullGraph, fullGraphSyntax);
 
     // // Render BFS traversal
     // const bfs = graph.bfs(startVertex);

@@ -1,0 +1,168 @@
+---
+sidebar_position: 2
+title: Graphs
+---
+
+## Definition
+
+Standard mathematical notation for a graph **G** is **(V,E)**,where:
+
+- V represents the set of vertices (also called nodes)
+- E represents the set of edges (connections between vertices)
+
+For example, in a simple graph representing cities and connections between them:
+
+> Here we have used Javascript arrays for demo
+
+Lets take following Vertices:
+
+```js
+const vertices = [
+  "Mumbai",
+  "Dubai",
+  "London",
+  "New York",
+  "Singapore",
+  "Tokyo",
+];
+```
+
+And following Edges:
+
+```js
+const edges = [
+  ["Mumbai", "Dubai"], // Mumbai-Dubai route
+  ["Mumbai", "Singapore"], // Mumbai-Singapore route
+  ["Dubai", "London"], // Dubai-London route
+  ["London", "New York"], // London-New York route
+  ["Singapore", "Tokyo"], // Singapore-Tokyo route
+  ["Dubai", "Singapore"], // Dubai-Singapore route
+  ["London", "Dubai"], // London-Dubai route
+  ["Singapore", "London"], // Singapore-London route
+];
+```
+
+# Spec
+
+:::info
+We use Object Oriented Programming Styled to present the Spec
+:::
+
+To define a graph using a spec, we need to define specs for following:
+
+- Vertex
+- Edge
+
+## Class: Vertex
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+<Tabs>
+  <TabItem value="apple" label="Apple" default>
+    This is an apple 🍎
+  </TabItem>
+  <TabItem value="orange" label="Orange">
+    This is an orange 🍊
+  </TabItem>
+  <TabItem value="banana" label="Banana">
+    This is a banana 🍌
+  </TabItem>
+</Tabs>
+
+```webidl
+interface Vertex {
+    // Factory method - primary way to create vertices
+    static Vertex create(in VertexInit init)
+        raises (InvalidArgumentException);
+
+    // Constructor equivalent - called by factory method
+    void init(in VertexInit init)
+        raises (InvalidArgumentException);
+
+    // Read-only attributes (set during construction)
+    readonly attribute VertexId id;
+
+    // Mutable attributes
+    attribute VertexData data;
+    readonly attribute EdgeCollection edges;
+
+    // Core operations
+    void addEdge(in Edge edge)
+        raises (InvalidArgumentException);
+    boolean removeEdge(in Edge edge)
+        raises (InvalidArgumentException);
+    EdgeCollection getEdges();
+    unsigned long getDegree();
+    boolean equals(in Vertex other);
+
+    // Optional: lifecycle methods
+    void validate()
+        raises (InvalidArgumentException);
+    void cleanup();
+};
+```
+
+### Properties
+
+```
+id: Any (required)
+data: Any (optional payload, defaults to null)
+```
+
+### Methods
+
+#### Constructor
+
+```
+constructor(id, data = null)
+Input:
+    - id: required identifier (any type but must be unique within a graph)
+    - data: optional payload data
+Output: new Vertex instance
+Process:
+    1. Validate id is not null/undefined
+    2. Initialize instance properties:
+        - Set this.id = id
+        - Set this.data = data
+    3. Return initialized vertex instance
+Throws:
+    - InvalidArgumentException if id is null/undefined
+```
+
+#### getData()
+
+```
+getData()
+Input: none
+Output: stored data
+Process:
+    1. Return stored payload data
+```
+
+#### getId()
+
+```
+getId()
+Input: none
+Output: stored id
+Process:
+    1. Return stored payload id
+```
+
+### Usage
+
+```
+// Create vertices with different types of IDs
+v1 = new Vertex(1)                    // Numeric ID
+v2 = new Vertex("user_123")           // String ID
+v3 = new Vertex({x: 0, y: 0})         // Object as ID
+v4 = new Vertex("D", {color: "red"})  // With additional data
+
+// Invalid creation - will throw
+v_invalid = new Vertex(null)  // Throws InvalidArgumentException
+
+// Access vertex properties
+id = v1.getId()         // Returns 1
+data = v4.getData()     // Returns {color: "red"}
+```
