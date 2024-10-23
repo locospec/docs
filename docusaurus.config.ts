@@ -34,6 +34,11 @@ const config: Config = {
     locales: ["en"],
   },
 
+  themes: ["@docusaurus/theme-mermaid"],
+  markdown: {
+    mermaid: true,
+  },
+
   presets: [
     [
       "classic",
@@ -70,6 +75,9 @@ const config: Config = {
   ],
 
   themeConfig: {
+    mermaid: {
+      theme: { light: "neutral", dark: "forest" },
+    },
     // Replace with your project's social card
     image: "img/docusaurus-social-card.jpg",
     navbar: {
