@@ -1,0 +1,27 @@
+@import "./base.css";
+@import "./components.css";
+@import "./utilities.css";
+
+footer.row {
+  @apply items-center;
+}
+
+.table-of-contents__link {
+  @apply text-sm;
+}
+
+.table-of-contents__link--active {
+  @apply text-sky-500;
+}
+
+ul.table-of-contents {
+  @apply space-y-3;
+}
+
+#__blog-post-container {
+  @apply mt-8;
+}
+
+article {
+  @apply !font-sans;
+}

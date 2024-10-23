@@ -55,58 +55,255 @@ To define a graph using a spec, we need to define specs for following:
 
 ## Class: Vertex
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
+    ### Properties
 
-<Tabs>
-  <TabItem value="apple" label="Apple" default>
-    This is an apple 🍎
-  </TabItem>
-  <TabItem value="orange" label="Orange">
-    This is an orange 🍊
-  </TabItem>
-  <TabItem value="banana" label="Banana">
-    This is a banana 🍌
-  </TabItem>
-</Tabs>
+    ```
+    id: Any (required)
+    data: Any (optional payload, defaults to null)
+    ```
 
-```webidl
-interface Vertex {
-    // Factory method - primary way to create vertices
-    static Vertex create(in VertexInit init)
-        raises (InvalidArgumentException);
+    #### Constructor
 
-    // Constructor equivalent - called by factory method
-    void init(in VertexInit init)
-        raises (InvalidArgumentException);
+    ```
+    constructor(id, data = null)
+    Input:
+        - id: required identifier (any type but must be unique within a graph)
+        - data: optional payload data
+    Output: new Vertex instance
+    Process:
+        1. Validate id is not null/undefined
+        2. Initialize instance properties:
+            - Set this.id = id
+            - Set this.data = data
+        3. Return initialized vertex instance
+    Throws:
+        - InvalidArgumentException if id is null/undefined
+    ```
 
-    // Read-only attributes (set during construction)
-    readonly attribute VertexId id;
+    ### Methods
 
-    // Mutable attributes
-    attribute VertexData data;
-    readonly attribute EdgeCollection edges;
+    #### getData()
 
-    // Core operations
-    void addEdge(in Edge edge)
-        raises (InvalidArgumentException);
-    boolean removeEdge(in Edge edge)
-        raises (InvalidArgumentException);
-    EdgeCollection getEdges();
-    unsigned long getDegree();
-    boolean equals(in Vertex other);
+    ```
+    getData()
+    Input: none
+    Output: stored data
+    Process:
+        1. Return stored payload data
+    ```
 
-    // Optional: lifecycle methods
-    void validate()
-        raises (InvalidArgumentException);
-    void cleanup();
-};
+    #### getId()
+
+    ```
+    getId()
+    Input: none
+    Output: stored id
+    Process:
+        1. Return stored payload id
+    ```
+
+    ### Usage
+
+    ```
+    // Create vertices with different types of IDs
+    v1 = new Vertex(1)                    // Numeric ID
+    v2 = new Vertex("user_123")           // String ID
+    v3 = new Vertex({x: 0, y: 0})         // Object as ID
+    v4 = new Vertex("D", {color: "red"})  // With additional data
+
+    // Invalid creation - will throw
+    v_invalid = new Vertex(null)  // Throws InvalidArgumentException
+
+    // Access vertex properties
+    id = v1.getId()         // Returns 1
+    data = v4.getData()     // Returns {color: "red"}
+    ```
+
+### Typescript Implementation
+
+```ts
+// Custom error class for invalid arguments
+class InvalidArgumentException extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidArgumentException";
+    Object.setPrototypeOf(this, InvalidArgumentException.prototype);
+  }
+}
+
+// Type definition for vertex ID - can be any primitive or object
+type VertexId = string | number | object;
+
+// Type definition for vertex data - can be any type or null
+type VertexData = any | null;
+
+class Vertex {
+  private readonly id: VertexId;
+  private data: VertexData;
+
+  /**
+   * Creates a new Vertex instance
+   * @param id The unique identifier for the vertex
+   * @param data Optional payload data
+   * @throws {InvalidArgumentException} If id is null or undefined
+   */
+  constructor(id: VertexId, data: VertexData = null) {
+    if (id === null || id === undefined) {
+      throw new InvalidArgumentException(
+        "Vertex ID cannot be null or undefined"
+      );
+    }
+    this.id = id;
+    this.data = data;
+  }
+
+  /**
+   * Returns the stored data payload
+   * @returns The data associated with this vertex
+   */
+  getData(): VertexData {
+    return this.data;
+  }
+
+  /**
+   * Returns the vertex ID
+   * @returns The unique identifier of this vertex
+   */
+  getId(): VertexId {
+    return this.id;
+  }
+
+  /**
+   * Sets new data for the vertex
+   * @param data The new data to store
+   */
+  setData(data: VertexData): void {
+    this.data = data;
+  }
+}
 ```
+
+#### Usage
+
+```ts
+// Example usage
+try {
+  // Create vertices with different types of IDs
+  const v1 = new Vertex(1); // Numeric ID
+  const v2 = new Vertex("user_123"); // String ID
+  const v3 = new Vertex({ x: 0, y: 0 }); // Object as ID
+  const v4 = new Vertex("D", { color: "red" }); // With additional data
+
+  // Access vertex properties
+  console.log(v1.getId()); // Output: 1
+  console.log(v4.getData()); // Output: {color: "red"}
+
+  // Test equality
+  const v5 = new Vertex(1);
+  console.log(v1.equals(v5)); // Output: true
+
+  // This will throw an error
+  const v_invalid = new Vertex(null); // Throws InvalidArgumentException
+} catch (error) {
+  if (error instanceof InvalidArgumentException) {
+    console.error("Invalid argument:", error.message);
+  } else {
+    console.error("Unexpected error:", error);
+  }
+}
+
+export default Vertex;
+```
+
+### PHP Implementation
+
+```php
+class Vertex
+{
+    /**
+     * @var mixed The unique identifier for the vertex
+     */
+    private readonly mixed $id;
+
+    /**
+     * @var mixed|null The data payload associated with the vertex
+     */
+    private mixed $data;
+
+    /**
+     * Creates a new Vertex instance
+     *
+     * @param mixed $id The unique identifier for the vertex
+     * @param mixed|null $data Optional payload data
+     * @throws InvalidArgumentException If id is null
+     */
+    public function __construct(mixed $id, mixed $data = null)
+    {
+        if ($id === null) {
+            throw new InvalidArgumentException('Vertex ID cannot be null');
+        }
+        $this->id = $id;
+        $this->data = $data;
+    }
+
+    /**
+     * Returns the stored data payload
+     *
+     * @return mixed|null The data associated with this vertex
+     */
+    public function getData(): mixed
+    {
+        return $this->data;
+    }
+
+    /**
+     * Returns the vertex ID
+     *
+     * @return mixed The unique identifier of this vertex
+     */
+    public function getId(): mixed
+    {
+        return $this->id;
+    }
+}
+```
+
+#### Usage
+
+```php
+// Example usage
+try {
+    // Create vertices with different types of IDs
+    $v1 = new Vertex(1); // Numeric ID
+    $v2 = new Vertex("user_123"); // String ID
+    $v3 = new Vertex((object)['x' => 0, 'y' => 0]); // Object as ID
+    $v4 = new Vertex("D", ['color' => 'red']); // With additional data
+
+    // Access vertex properties
+    echo $v1->getId() . PHP_EOL;        // Output: 1
+    var_dump($v4->getData());           // Output: array(1) { ["color"]=> string(3) "red" }
+
+    // String representation
+    echo $v4 . PHP_EOL;                 // Output: Vertex(id: D, data: {"color":"red"})
+
+    // This will throw an error
+    $v_invalid = new Vertex(null);      // Throws InvalidArgumentException
+
+} catch (InvalidArgumentException $e) {
+    echo "Invalid argument: " . $e->getMessage() . PHP_EOL;
+} catch (Exception $e) {
+    echo "Unexpected error: " . $e->getMessage() . PHP_EOL;
+}
+```
+
+## Class: Edge
 
 ### Properties
 
-```
-id: Any (required)
+```yaml
+source: Vertex (required)
+target: Vertex (required)
+type: String|null (optional, defaults to null)
 data: Any (optional payload, defaults to null)
 ```
 
@@ -114,25 +311,63 @@ data: Any (optional payload, defaults to null)
 
 #### Constructor
 
-```
-constructor(id, data = null)
+```yaml
+constructor(source, target, type = null, data = null)
 Input:
-    - id: required identifier (any type but must be unique within a graph)
+    - source: required Vertex instance representing start of edge
+    - target: required Vertex instance representing end of edge
+    - type: optional string identifying the type of relationship
     - data: optional payload data
-Output: new Vertex instance
+Output: new Edge instance
 Process:
-    1. Validate id is not null/undefined
+    1. Validate inputs:
+        - source must be valid Vertex instance
+        - target must be valid Vertex instance
+        - type, if provided, must be a string (can be empty)
     2. Initialize instance properties:
-        - Set this.id = id
+        - Set this.source = source
+        - Set this.target = target
+        - Set this.type = type
         - Set this.data = data
-    3. Return initialized vertex instance
+    3. Return initialized edge instance
 Throws:
-    - InvalidArgumentException if id is null/undefined
+    - InvalidArgumentException if source or target is invalid
+    - InvalidArgumentException if type is provided but not a string
 ```
 
-#### getData()
+#### getSource
 
+```yaml
+getSource()
+Input: none
+Output: source Vertex instance
+Process:
+    1. Return stored source vertex
 ```
+
+#### getTarget
+
+```yaml
+getTarget()
+Input: none
+Output: target Vertex instance
+Process:
+    1. Return stored target vertex
+```
+
+#### getType
+
+```yaml
+getType()
+Input: none
+Output: string|null type
+Process:
+    1. Return stored type value
+```
+
+#### getData
+
+```yaml
 getData()
 Input: none
 Output: stored data
@@ -140,29 +375,316 @@ Process:
     1. Return stored payload data
 ```
 
-#### getId()
+#### setData
 
-```
-getId()
-Input: none
-Output: stored id
+```yaml
+setData(data)
+Input: any data
+Output: void
 Process:
-    1. Return stored payload id
+    1. Set this.data = data
 ```
 
 ### Usage
 
+```yaml
+// Create vertices first
+v1 = new Vertex(1)
+v2 = new Vertex(2)
+
+// Create edges with different configurations
+e1 = new Edge(v1, v2)                         // Basic edge without type or data
+e2 = new Edge(v1, v2, "FRIEND")               // Edge with type
+e3 = new Edge(v1, v2, null, {weight: 5})      // Edge with only data
+e4 = new Edge(v1, v2, "FOLLOWS", {since: "2024"})  // Edge with type and data
+
+// Invalid creation attempts - will throw
+e_invalid1 = new Edge(null, v2)        // Throws InvalidArgumentException
+e_invalid2 = new Edge(v1, null)        // Throws InvalidArgumentException
+e_invalid3 = new Edge(v1, v2, 123)     // Throws InvalidArgumentException (type must be string or null)
+
+// Access edge properties
+source = e1.getSource()    // Returns vertex v1
+target = e1.getTarget()    // Returns vertex v2
+type = e2.getType()       // Returns "FRIEND"
+data = e4.getData()       // Returns {since: "2024"}
+
+// Modify data
+e1.setData({strength: 5})  // Sets additional data
+e1.setData(null)          // Removes additional data
 ```
-// Create vertices with different types of IDs
-v1 = new Vertex(1)                    // Numeric ID
-v2 = new Vertex("user_123")           // String ID
-v3 = new Vertex({x: 0, y: 0})         // Object as ID
-v4 = new Vertex("D", {color: "red"})  // With additional data
 
-// Invalid creation - will throw
-v_invalid = new Vertex(null)  // Throws InvalidArgumentException
+### Typescript Implementation
 
-// Access vertex properties
-id = v1.getId()         // Returns 1
-data = v4.getData()     // Returns {color: "red"}
+#### Edge Class
+
+```ts
+// File: Edge.ts
+
+import { Vertex } from "./Vertex"; // Assuming Vertex class is in separate file
+
+class InvalidArgumentException extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "InvalidArgumentException";
+    Object.setPrototypeOf(this, InvalidArgumentException.prototype);
+  }
+}
+
+export class Edge {
+  private readonly source: Vertex;
+  private readonly target: Vertex;
+  private readonly type: string | null;
+  private data: any | null;
+
+  /**
+   * Creates a new Edge instance
+   * @param source The source vertex
+   * @param target The target vertex
+   * @param type Optional type of the edge
+   * @param data Optional payload data
+   * @throws {InvalidArgumentException} If source or target is invalid, or if type is provided but not a string
+   */
+  constructor(
+    source: Vertex,
+    target: Vertex,
+    type: string | null = null,
+    data: any = null
+  ) {
+    if (!source || !(source instanceof Vertex)) {
+      throw new InvalidArgumentException(
+        "Source must be a valid Vertex instance"
+      );
+    }
+    if (!target || !(target instanceof Vertex)) {
+      throw new InvalidArgumentException(
+        "Target must be a valid Vertex instance"
+      );
+    }
+    if (type !== null && typeof type !== "string") {
+      throw new InvalidArgumentException("Type, if provided, must be a string");
+    }
+
+    this.source = source;
+    this.target = target;
+    this.type = type;
+    this.data = data;
+  }
+
+  /**
+   * Returns the source vertex
+   */
+  getSource(): Vertex {
+    return this.source;
+  }
+
+  /**
+   * Returns the target vertex
+   */
+  getTarget(): Vertex {
+    return this.target;
+  }
+
+  /**
+   * Returns the edge type
+   */
+  getType(): string | null {
+    return this.type;
+  }
+
+  /**
+   * Returns the edge data
+   */
+  getData(): any | null {
+    return this.data;
+  }
+
+  /**
+   * Sets new data for the edge
+   */
+  setData(data: any): void {
+    this.data = data;
+  }
+}
+```
+
+#### Usage
+
+```ts
+// File: EdgeUsage.ts
+
+import { Vertex } from "./Vertex";
+import { Edge } from "./Edge";
+
+// Create vertices
+const v1 = new Vertex(1);
+const v2 = new Vertex(2, { name: "Vertex 2" });
+
+try {
+  // Create edges with different configurations
+  const e1 = new Edge(v1, v2); // Basic edge without type or data
+  const e2 = new Edge(v1, v2, "FRIEND"); // Edge with type
+  const e3 = new Edge(v1, v2, null, { weight: 5 }); // Edge with only data
+  const e4 = new Edge(v1, v2, "FOLLOWS", { since: "2024" }); // Edge with type and data
+
+  // Access edge properties
+  console.log(e1.getSource().getId()); // Output: 1
+  console.log(e2.getType()); // Output: "FRIEND"
+  console.log(e3.getData()); // Output: { weight: 5 }
+  console.log(e4.getTarget().getId()); // Output: 2
+
+  // Modify data
+  e1.setData({ strength: 5 });
+  console.log(e1.getData()); // Output: { strength: 5 }
+
+  // These will throw errors
+  // const invalid1 = new Edge(null, v2);           // Invalid source
+  // const invalid2 = new Edge(v1, null);           // Invalid target
+  // const invalid3 = new Edge(v1, v2, 123);        // Invalid type
+} catch (error) {
+  if (error instanceof Error) {
+    console.error("Error:", error.message);
+  }
+}
+```
+
+### PHP Implementation
+
+#### Class
+
+```php
+<?php
+// File: Edge.php
+
+declare(strict_types=1);
+
+require_once 'Vertex.php';
+
+class InvalidArgumentException extends \Exception
+{
+}
+
+class Edge
+{
+    private readonly Vertex $source;
+    private readonly Vertex $target;
+    private readonly ?string $type;
+    private mixed $data;
+
+    /**
+     * Creates a new Edge instance
+     *
+     * @param Vertex $source The source vertex
+     * @param Vertex $target The target vertex
+     * @param string|null $type Optional type of the edge
+     * @param mixed|null $data Optional payload data
+     * @throws InvalidArgumentException If source or target is invalid, or if type is provided but not a string
+     */
+    public function __construct(
+        Vertex $source,
+        Vertex $target,
+        ?string $type = null,
+        mixed $data = null
+    ) {
+        if (!$source instanceof Vertex) {
+            throw new InvalidArgumentException('Source must be a valid Vertex instance');
+        }
+        if (!$target instanceof Vertex) {
+            throw new InvalidArgumentException('Target must be a valid Vertex instance');
+        }
+
+        $this->source = $source;
+        $this->target = $target;
+        $this->type = $type;
+        $this->data = $data;
+    }
+
+    /**
+     * Returns the source vertex
+     */
+    public function getSource(): Vertex
+    {
+        return $this->source;
+    }
+
+    /**
+     * Returns the target vertex
+     */
+    public function getTarget(): Vertex
+    {
+        return $this->target;
+    }
+
+    /**
+     * Returns the edge type
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * Returns the edge data
+     */
+    public function getData(): mixed
+    {
+        return $this->data;
+    }
+
+    /**
+     * Sets new data for the edge
+     */
+    public function setData(mixed $data): void
+    {
+        $this->data = $data;
+    }
+}
+```
+
+#### Usage
+
+```php
+<?php
+// File: edge_usage.php
+
+declare(strict_types=1);
+
+require_once 'Vertex.php';
+require_once 'Edge.php';
+
+try {
+    // Create vertices
+    $v1 = new Vertex(1);
+    $v2 = new Vertex(2, ["name" => "Vertex 2"]);
+
+    // Create edges with different configurations
+    $e1 = new Edge($v1, $v2);                        // Basic edge without type or data
+    $e2 = new Edge($v1, $v2, "FRIEND");              // Edge with type
+    $e3 = new Edge($v1, $v2, null, ["weight" => 5]); // Edge with only data
+    $e4 = new Edge(
+        $v1,
+        $v2,
+        "FOLLOWS",
+        ["since" => "2024"]
+    );  // Edge with type and data
+
+    // Access edge properties
+    echo $e1->getSource()->getId() . PHP_EOL;    // Output: 1
+    var_dump($e2->getType());                    // Output: string(6) "FRIEND"
+    var_dump($e3->getData());                    // Output: array(1) { ["weight"]=> int(5) }
+    echo $e4->getTarget()->getId() . PHP_EOL;    // Output: 2
+
+    // Modify data
+    $e1->setData(["strength" => 5]);
+    var_dump($e1->getData());                    // Output: array(1) { ["strength"]=> int(5) }
+
+    // These will throw errors
+    // $invalid1 = new Edge(null, $v2);           // Invalid source
+    // $invalid2 = new Edge($v1, null);           // Invalid target
+
+} catch (InvalidArgumentException $e) {
+    echo "Invalid argument: " . $e->getMessage() . PHP_EOL;
+} catch (Exception $e) {
+    echo "Unexpected error: " . $e->getMessage() . PHP_EOL;
+}
 ```
