@@ -10,7 +10,7 @@ const BASE_URL =
 const config: Config = {
   title: "LoCoSpec",
   tagline: "Low Code Specification for building full-stack web and mobile apps",
-  favicon: "img/favicon.ico",
+  favicon: "img/favicon_2.png",
 
   // Set the production url of your site here
   url: "https://locospec.com",
@@ -34,6 +34,11 @@ const config: Config = {
     locales: ["en"],
   },
 
+  themes: ["@docusaurus/theme-mermaid"],
+  markdown: {
+    mermaid: true,
+  },
+
   presets: [
     [
       "classic",
@@ -42,10 +47,10 @@ const config: Config = {
           path: "spec",
           routeBasePath: "spec",
           sidebarPath: "./sidebars.ts",
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+          // // Please change this to your repo.
+          // // Remove this to remove the "edit this page" links.
+          // editUrl:
+          //   "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
         },
         blog: {
           showReadingTime: true,
@@ -70,13 +75,18 @@ const config: Config = {
   ],
 
   themeConfig: {
+    mermaid: {
+      theme: { light: "neutral", dark: "forest" },
+    },
     // Replace with your project's social card
     image: "img/docusaurus-social-card.jpg",
     navbar: {
       title: "LoCoSpec",
       logo: {
         alt: "LoCoSpec Logo",
-        src: "img/logo.svg",
+        src: "img/logo_white.png",
+        srcDark: "img/logo_dark.png",
+        // src: "img/logo.svg",
       },
       items: [
         {
@@ -140,6 +150,7 @@ const config: Config = {
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+      additionalLanguages: ["php"],
     },
   } satisfies Preset.ThemeConfig,
 };

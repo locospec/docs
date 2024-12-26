@@ -49,8 +49,8 @@ export default {
     "hello",
     {
       type: "category",
-      label: "Tutorial",
-      items: ["tutorial-basics/create-a-document"],
+      label: "Concepts",
+      items: ["concepts/create-a-document"],
     },
   ],
 };

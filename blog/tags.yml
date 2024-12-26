@@ -18,7 +18,14 @@ hola:
   permalink: /hola
   description: Hola tag description
 
+data-structures:
+  label: Data Structures
+  permalink: /data-structures
+
+algorithms:
+  label: Algorithms
+  permalink: /algorithms
+
 tutorial:
   label: Tutorial
   permalink: /tutorial
-  description: tutorial tag description

@@ -26,6 +26,7 @@ module.exports = function (context, options) {
     },
     configurePostCss(postcssOptions) {
       // https://github.com/facebook/docusaurus/issues/2961#issuecomment-1531243979
+      postcssOptions.plugins.push(require("tailwindcss/nesting"));
       postcssOptions.plugins.push(require("tailwindcss"));
       postcssOptions.plugins.push(require("autoprefixer"));
       return postcssOptions;
