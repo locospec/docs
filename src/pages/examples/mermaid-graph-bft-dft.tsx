@@ -74,7 +74,7 @@ const GraphVisualizer = () => {
     const dfsTreeRoot = TreeGraphGenerator.generateDFSTree(cities, startVertex);
     const dfsMermaidSyntax =
       TreeGraphGenerator.treeToMermaidSyntax(dfsTreeRoot);
-    console.log(dfsMermaidSyntax);
+    console.log("dfsTreeRoot", dfsTreeRoot);
 
     await renderMermaidDiagram(diagramRefs.dfsTraversal, dfsMermaidSyntax);
 

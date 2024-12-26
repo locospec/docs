@@ -2,13 +2,14 @@
 sidebar_position: 2
 ---
 
-# Graph (Adjacency List) Specification
+# Graph (Adjacency List)
 
 ## Properties
 
 ```yaml
 vertices: Map<VertexId, Vertex>
 adjacencyList: Map<VertexId, Array<Edge>>
+directed: boolean
 ```
 
 ## Constructor
@@ -42,6 +43,21 @@ Throws:
     - DuplicateVertexException if vertex.id already exists
 ```
 
+### hasEdge()
+
+```yaml
+hasEdge(sourceId, targetId)
+Input:
+    - sourceId: identifier of source vertex
+    - targetId: identifier of target vertex
+Output: boolean
+Process:
+    1. Check if sourceId exists in adjacencyList
+    2. If it exists, iterate through edges in adjacencyList[sourceId]
+    3. Return true if any edge's target matches targetId
+    4. Return false otherwise
+```
+
 ### addEdge()
 
 ```yaml
@@ -51,8 +67,13 @@ Output: void
 Process:
     1. Validate edge is valid Edge instance
     2. Verify both source and target vertices exist in graph
-    3. Add edge to adjacencyList[source.id]
-    4. If not directed, also add edge to adjacencyList[target.id]
+    3. Get source and target IDs from edge
+    4. Check if edge already exists using hasEdge(sourceId, targetId)
+    5. If edge doesn't exist:
+       - Add edge to adjacencyList[source.id]
+    6. If not directed and reverse edge doesn't exist:
+       - Create reverse edge
+       - Add reverse edge to adjacencyList[target.id]
 Throws:
     - InvalidArgumentException if edge invalid
     - VertexNotFoundException if either vertex not in graph
@@ -100,28 +121,34 @@ graph = new Graph(directed = false)
 // Add vertices
 v1 = new Vertex(1)
 v2 = new Vertex(2)
-v3 = new Vertex(3)
-
 graph.addVertex(v1)
 graph.addVertex(v2)
-graph.addVertex(v3)
 
-// Add edges
+// Add edge
 e1 = new Edge(v1, v2, "CONNECTS")
-e2 = new Edge(v2, v3, "CONNECTS")
-e3 = new Edge(v1, v3, "CONNECTS")
+graph.addEdge(e1)  // Adds edge and creates reverse edge for undirected graph
 
-graph.addEdge(e1)
-graph.addEdge(e2)
-graph.addEdge(e3)
+// Try to add duplicate edge
+e2 = new Edge(v1, v2, "CONNECTS")
+graph.addEdge(e2)  // Edge not added since it already exists
 
-// Get neighbors
-neighbors = graph.getNeighbors(1)  // Returns edges connected to vertex 1
+// Check if edge exists
+hasEdge = graph.hasEdge(1, 2)  // Returns true
+hasEdge = graph.hasEdge(2, 1)  // Returns true (undirected graph)
 
 // Resulting adjacencyList structure (undirected):
 // {
-//   1: [Edge(1->2), Edge(1->3)],
-//   2: [Edge(2->1), Edge(2->3)],
-//   3: [Edge(3->1), Edge(3->2)]
+//   1: [Edge(1->2)],
+//   2: [Edge(2->1)]
 // }
 ```
+
+RS
+Usually in database operations, we do two kinds:
+
+Expansion: Fetch a model, and fetch it's related models also -> During this we explore what can we reach from our data model, and then what else can reach from it's children. In some way it's uni-directional. I want that graph.
+Filtering: We want to filter models by relationships, in this case we need to understand how to reach the current model from the relation model.
+In a way you can look at it like this:
+
+Expansion - We want to from source model what all target models can be reached and all possible paths
+Filteration - We want to know what all target model can reach source model from what all edges
