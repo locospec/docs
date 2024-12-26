@@ -1,0 +1,5 @@
+.navbar__inner,
+.footer > div,
+.main-wrapper {
+  @apply container md:px-16 mx-auto;
+}

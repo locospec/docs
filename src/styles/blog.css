@@ -1,0 +1,53 @@
+/* Remove underlines for links */
+.blog-post-page,
+.blog-authors-posts-page,
+.blog-tags-post-list-page,
+.blog-authors-list-page,
+.blog-list-page {
+  a {
+    @apply no-underline;
+  }
+  a:not([class^="tag_"]),
+  a:not([class^="tag_"]):hover {
+    --ifm-link-color: var(--ifm-font-base-color);
+    --ifm-link-hover-color: var(--ifm-font-base-color);
+  }
+
+  a:not([class^="tag_"]):hover {
+    @apply opacity-95;
+  }
+}
+
+/* Make blog left sidebar aligned */
+.blog-post-page,
+.blog-list-page,
+.blog-authors-posts-page,
+.blog-authors-list-page,
+.blog-tags-post-list-page,
+.blog-tags-list-page {
+  .main-wrapper > div,
+  .main-wrapper > div {
+    @apply md:px-0;
+  }
+}
+
+/* Style each blog card */
+.blog-authors-posts-page,
+.blog-tags-post-list-page,
+.blog-list-page {
+  article {
+    @apply py-8 px-8 rounded-xl bg-gray-50 dark:bg-gray-800 !mb-8;
+  }
+}
+
+/* Add divider on blog detail page */
+
+.blog-post-page {
+  header {
+    @apply pb-4 border-solid border-0 border-b border-gray-200 dark:border-gray-700;
+  }
+
+  #__blog-post-container {
+    @apply mt-8 lg:mt-8;
+  }
+}

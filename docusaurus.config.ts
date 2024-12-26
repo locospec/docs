@@ -34,6 +34,10 @@ const config: Config = {
     locales: ["en"],
   },
 
+  stylesheets: [
+    "https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:wght@300;400;500;600;700;800;900&family=Lexend:wght@100..900&display=swap",
+  ],
+
   presets: [
     [
       "classic",
