@@ -36,3 +36,8 @@
     @apply !text-4xl;
   }
 }
+
+.navbar__link--active,
+a.navbar__link--active {
+  @apply font-semibold;
+}
