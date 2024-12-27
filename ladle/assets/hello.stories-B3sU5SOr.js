@@ -1,0 +1,1 @@
+import{j as e}from"./index-DdeYOeqn.js";const t=()=>e.jsx("p",{className:"bg-red-200 md:bg-blue-200 m-6 p-6 dark:md:bg-green-200",children:"Hello World"});typeof window<"u"&&window.document&&window.document.createElement&&document.documentElement.setAttribute("data-storyloaded","");export{t as World};

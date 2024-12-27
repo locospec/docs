@@ -1,0 +1,20 @@
+{
+  "about": {
+    "homepage": "https://www.ladle.dev",
+    "github": "https://github.com/tajo/ladle",
+    "version": 1
+  },
+  "stories": {
+    "hello--world": {
+      "name": "World",
+      "levels": [
+        "Hello"
+      ],
+      "locStart": 1,
+      "locEnd": 5,
+      "filePath": "src/stories/hello.stories.tsx",
+      "namedExport": "World",
+      "meta": {}
+    }
+  }
+}
