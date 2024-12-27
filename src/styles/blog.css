@@ -51,3 +51,31 @@
     @apply mt-8 lg:mt-8;
   }
 }
+
+/* Start -- Following are required only if blogSidebarCount is 0 */
+
+.blog-post-page {
+  /* We need col--10 here */
+  main {
+    @apply md:ml-0 md:pl-0;
+    --ifm-col-width: calc(10 / 12 * 100%);
+    flex: 0 0 var(--ifm-col-width) !important;
+  }
+  .row {
+    @apply md:ml-0;
+  }
+}
+
+.blog-list-page {
+  /* We need col--12 here */
+  main {
+    @apply md:ml-0 pl-0;
+    --ifm-col-width: calc(12 / 12 * 100%);
+    flex: 0 0 var(--ifm-col-width) !important;
+  }
+  .row {
+    @apply md:ml-0 md:pl-0;
+  }
+}
+
+/* End -- Above are required only if blogSidebarCount is 0 */
